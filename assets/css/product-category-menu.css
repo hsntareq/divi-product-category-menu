@@ -1,0 +1,141 @@
+.dpcm-menu {
+	position: relative;
+	display: block;
+	width: 100%;
+	padding: 0;
+	background: transparent;
+}
+
+.dpcm-menu__title {
+	display: block;
+	margin-bottom: 0.75rem;
+	font-weight: 600;
+}
+
+.dpcm-menu__items,
+.dpcm-submenu {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.dpcm-menu__items {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem 1.25rem;
+	align-items: center;
+}
+
+.dpcm-menu__item,
+.dpcm-submenu__item {
+	position: relative;
+	margin: 0;
+}
+
+.dpcm-menu__link,
+.dpcm-submenu__link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	text-decoration: none;
+	line-height: 1.4;
+}
+
+.dpcm-menu__item--has-children {
+	padding-right: 1.75rem;
+}
+
+.dpcm-menu__indicator,
+.dpcm-menu__toggle::before {
+	content: '';
+	width: 0.45rem;
+	height: 0.45rem;
+	border-right: 1px solid currentColor;
+	border-bottom: 1px solid currentColor;
+	transform: rotate(45deg);
+	display: inline-block;
+}
+
+.dpcm-menu__toggle {
+	position: absolute;
+	top: 50%;
+	right: 0;
+	transform: translateY(-50%);
+	width: 1.5rem;
+	height: 1.5rem;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: inherit;
+	cursor: pointer;
+}
+
+.dpcm-menu__toggle::before {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -60%) rotate(45deg);
+}
+
+.dpcm-submenu {
+	position: absolute;
+	top: calc(100% + 0.5rem);
+	left: 0;
+	min-width: 14rem;
+	padding: 0.75rem;
+	background: #ffffff;
+	border: 1px solid rgba(0, 0, 0, 0.08);
+	box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(0.4rem);
+	transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
+	z-index: 20;
+}
+
+.dpcm-submenu__item + .dpcm-submenu__item {
+	margin-top: 0.5rem;
+}
+
+.dpcm-menu__item.is-open > .dpcm-submenu,
+.dpcm-menu--trigger-hover .dpcm-menu__item--has-children:hover > .dpcm-submenu,
+.dpcm-menu__item--has-children:focus-within > .dpcm-submenu {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+}
+
+.dpcm-menu__empty {
+	list-style: none;
+	opacity: 0.7;
+}
+
+@media (max-width: 980px) {
+	.dpcm-menu__items {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 0.5rem;
+	}
+
+	.dpcm-menu__item--has-children {
+		padding-right: 2rem;
+	}
+
+	.dpcm-submenu {
+		position: static;
+		min-width: 0;
+		margin-top: 0.5rem;
+		padding: 0.5rem 0 0 1rem;
+		background: transparent;
+		border: 0;
+		box-shadow: none;
+		display: none;
+		opacity: 1;
+		visibility: visible;
+		transform: none;
+	}
+
+	.dpcm-menu__item.is-open > .dpcm-submenu {
+		display: block;
+	}
+}
