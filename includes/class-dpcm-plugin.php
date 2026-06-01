@@ -44,7 +44,7 @@ class DPCM_Plugin {
 	 * Register early plugin hooks.
 	 */
 	private function __construct() {
-		add_action( 'plugins_loaded', array( $this, 'bootstrap' ) );
+		add_action( 'after_setup_theme', array( $this, 'bootstrap' ), 20 );
 	}
 
 	/**
@@ -74,7 +74,7 @@ class DPCM_Plugin {
 			$this->missing_dependencies['divi'] = __( 'Divi Builder', 'divi-product-category-menu' );
 		}
 
-		if ( ! taxonomy_exists( 'product_cat' ) ) {
+		if ( ! class_exists( 'WooCommerce' ) ) {
 			$this->missing_dependencies['woocommerce'] = __( 'WooCommerce', 'divi-product-category-menu' );
 		}
 
@@ -125,18 +125,22 @@ class DPCM_Plugin {
 	 * @return void
 	 */
 	public function register_assets() {
+		$style_path           = DPCM_PATH . 'assets/css/product-category-menu.css';
+		$frontend_script_path = DPCM_PATH . 'assets/js/product-category-menu.js';
+		$builder_script_path  = DPCM_PATH . 'assets/js/dpcm-visual-builder.js';
+
 		wp_register_style(
 			'dpcm-product-category-menu',
 			DPCM_URL . 'assets/css/product-category-menu.css',
 			array(),
-			DPCM_VERSION
+			file_exists( $style_path ) ? filemtime( $style_path ) : DPCM_VERSION
 		);
 
 		wp_register_script(
 			'dpcm-product-category-menu',
 			DPCM_URL . 'assets/js/product-category-menu.js',
 			array(),
-			DPCM_VERSION,
+			file_exists( $frontend_script_path ) ? filemtime( $frontend_script_path ) : DPCM_VERSION,
 			true
 		);
 
@@ -144,7 +148,7 @@ class DPCM_Plugin {
 			'dpcm-visual-builder',
 			DPCM_URL . 'assets/js/dpcm-visual-builder.js',
 			array( 'react', 'jquery' ),
-			DPCM_VERSION,
+			file_exists( $builder_script_path ) ? filemtime( $builder_script_path ) : DPCM_VERSION,
 			true
 		);
 
