@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', function() {
 		var rowWidthScopeEnabled = menu.classList.contains('dpcm-menu--width-scope-row');
 		var tabButtons = menu.querySelectorAll('.dpcm-tax-nav__btn');
 		var taxPanels = menu.querySelectorAll('.dpcm-tax-panel');
+		var isMobileLayout = function() {
+			return window.matchMedia('(max-width: 980px)').matches;
+		};
 
 		var updateDropdownScopeMetrics = function() {
 			if (!rowWidthScopeEnabled) {
@@ -112,18 +115,38 @@ document.addEventListener('DOMContentLoaded', function() {
 		tabButtons.forEach(function(button) {
 			button.addEventListener('click', function(e) {
 				e.stopPropagation(); // Prevent outside click handler from firing
+
+				if (isMobileLayout()) {
+					var targetId = button.getAttribute('data-dpcm-tax-target');
+					var isActive = button.classList.contains('is-active');
+
+					if (isActive && menu.classList.contains('dpcm-menu--open')) {
+						closeMenu();
+						return;
+					}
+
+					activateTaxPanel(targetId);
+					return;
+				}
+
 				activateTaxPanel(button.getAttribute('data-dpcm-tax-target'));
 			});
 
-			if (triggerMode === 'hover') {
-				button.addEventListener('mouseenter', function() {
-					activateTaxPanel(button.getAttribute('data-dpcm-tax-target'));
-				});
+			button.addEventListener('mouseenter', function() {
+				if (isMobileLayout()) {
+					return;
+				}
 
-				button.addEventListener('focus', function() {
-					activateTaxPanel(button.getAttribute('data-dpcm-tax-target'));
-				});
-			}
+				activateTaxPanel(button.getAttribute('data-dpcm-tax-target'));
+			});
+
+			button.addEventListener('focus', function() {
+				if (isMobileLayout()) {
+					return;
+				}
+
+				activateTaxPanel(button.getAttribute('data-dpcm-tax-target'));
+			});
 		});
 
 		taxPanels.forEach(function(panel) {
@@ -135,8 +158,23 @@ document.addEventListener('DOMContentLoaded', function() {
 				var hasChildren = item.classList.contains('dpcm-tax-item--has-children');
 
 				item.addEventListener('mouseenter', function() {
+					if (isMobileLayout()) {
+						return;
+					}
+
 					activateTaxItemInPanel(panel, item);
 				});
+
+				if (head) {
+					head.addEventListener('click', function(event) {
+						if (!isMobileLayout() && triggerMode !== 'click') {
+							return;
+						}
+
+						event.stopPropagation();
+						activateTaxItemInPanel(panel, item);
+					});
+				}
 
 				if (triggerMode === 'click' && head) {
 					head.addEventListener('click', function(event) {
@@ -161,11 +199,13 @@ document.addEventListener('DOMContentLoaded', function() {
 			});
 		});
 
-		if (triggerMode === 'hover') {
-			menu.addEventListener('mouseleave', function() {
-				closeMenu();
-			});
-		}
+		menu.addEventListener('mouseleave', function() {
+			if (isMobileLayout()) {
+				return;
+			}
+
+			closeMenu();
+		});
 
 		// Hide all panels when clicking outside
 		document.addEventListener('click', function(event) {
