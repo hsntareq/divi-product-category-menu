@@ -387,6 +387,20 @@ class DPCM_Product_Category_Menu extends ET_Builder_Module {
 				'tab_slug'        => 'advanced',
 				'toggle_slug'     => 'design_elements',
 			),
+			'dropdown_max_height'   => array(
+				'label'           => esc_html__( 'Dropdown Max Height', 'divi-product-category-menu' ),
+				'type'            => 'range',
+				'option_category' => 'layout',
+				'default'         => '350px',
+				'default_unit'    => 'px',
+				'range_settings'  => array(
+					'min'  => 180,
+					'max'  => 1200,
+					'step' => 5,
+				),
+				'tab_slug'        => 'advanced',
+				'toggle_slug'     => 'design_elements',
+			),
 		);
 	}
 
@@ -427,7 +441,7 @@ class DPCM_Product_Category_Menu extends ET_Builder_Module {
 		$dpcm_show_indicator      = 'on' === $this->props['show_indicator'];
 		$dpcm_menu_class_name     = implode( ' ', $dpcm_menu_classes );
 		$dpcm_menu_inline_style   = sprintf(
-			'--dpcm-left-cat-text:%1$s;--dpcm-left-cat-bg:%2$s;--dpcm-left-cat-active-text:%3$s;--dpcm-left-cat-active-bg:%4$s;--dpcm-main-btn-bg:%5$s;--dpcm-main-btn-text:%6$s;--dpcm-main-btn-bg-active:%7$s;--dpcm-main-btn-text-active:%8$s;--dpcm-panel-bg:%9$s;--dpcm-panel-radius:%10$s;--dpcm-panel-padding:%11$s;--dpcm-left-col-width:%12$s;--dpcm-mega-min-height:%13$s;--dpcm-left-item-size:%14$s;--dpcm-sub-item-size:%15$s;',
+			'--dpcm-left-cat-text:%1$s;--dpcm-left-cat-bg:%2$s;--dpcm-left-cat-active-text:%3$s;--dpcm-left-cat-active-bg:%4$s;--dpcm-main-btn-bg:%5$s;--dpcm-main-btn-text:%6$s;--dpcm-main-btn-bg-active:%7$s;--dpcm-main-btn-text-active:%8$s;--dpcm-panel-bg:%9$s;--dpcm-panel-radius:%10$s;--dpcm-panel-padding:%11$s;--dpcm-left-col-width:%12$s;--dpcm-mega-min-height:%13$s;--dpcm-left-item-size:%14$s;--dpcm-sub-item-size:%15$s;--dpcm-dropdown-max-height:%16$s;',
 			esc_attr( $this->props['left_cat_text_color'] ? $this->props['left_cat_text_color'] : '#1f2937' ),
 			esc_attr( $this->props['left_cat_bg_color'] ? $this->props['left_cat_bg_color'] : '#f8fafc' ),
 			esc_attr( $this->props['left_cat_active_text_color'] ? $this->props['left_cat_active_text_color'] : '#ffffff' ),
@@ -442,7 +456,8 @@ class DPCM_Product_Category_Menu extends ET_Builder_Module {
 			esc_attr( $this->props['mega_left_column_width'] ? $this->props['mega_left_column_width'] : '300px' ),
 			esc_attr( $this->props['mega_min_height'] ? $this->props['mega_min_height'] : '280px' ),
 			esc_attr( $this->props['left_item_font_size'] ? $this->props['left_item_font_size'] : '16px' ),
-			esc_attr( $this->props['sub_item_font_size'] ? $this->props['sub_item_font_size'] : '15px' )
+			esc_attr( $this->props['sub_item_font_size'] ? $this->props['sub_item_font_size'] : '15px' ),
+			esc_attr( $this->props['dropdown_max_height'] ? $this->props['dropdown_max_height'] : '350px' )
 		);
 
 		ob_start();

@@ -28,6 +28,7 @@ class DPCMProductCategoryMenu extends Component {
 			'--dpcm-mega-min-height': props.mega_min_height || '280px',
 			'--dpcm-left-item-size': props.left_item_font_size || '16px',
 			'--dpcm-sub-item-size': props.sub_item_font_size || '15px',
+			'--dpcm-dropdown-max-height': props.dropdown_max_height || '350px',
 		};
 		const categoryTerms = [
 			{

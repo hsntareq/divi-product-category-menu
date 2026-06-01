@@ -16,6 +16,7 @@
 	--dpcm-mega-min-height: 280px;
 	--dpcm-left-item-size: 16px;
 	--dpcm-sub-item-size: 15px;
+	--dpcm-dropdown-max-height: 350px;
 	--dpcm-panel-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
 	--dpcm-dropdown-width: 100%;
 	--dpcm-dropdown-offset: 0px;
@@ -63,6 +64,9 @@
 
 .dpcm-tax-panels {
 	display: none;
+	max-height: var(--dpcm-dropdown-max-height);
+	overflow-y: auto;
+	overflow-x: hidden;
 	background: var(--dpcm-panel-bg);
 	border-radius: var(--dpcm-panel-radius);
 	padding: var(--dpcm-panel-padding);
