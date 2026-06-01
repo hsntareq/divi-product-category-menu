@@ -129,6 +129,10 @@ document.addEventListener('DOMContentLoaded', function() {
 					return;
 				}
 
+				if (triggerMode !== 'click') {
+					return;
+				}
+
 				activateTaxPanel(button.getAttribute('data-dpcm-tax-target'));
 			});
 
@@ -137,11 +141,19 @@ document.addEventListener('DOMContentLoaded', function() {
 					return;
 				}
 
+				if (triggerMode !== 'hover') {
+					return;
+				}
+
 				activateTaxPanel(button.getAttribute('data-dpcm-tax-target'));
 			});
 
 			button.addEventListener('focus', function() {
 				if (isMobileLayout()) {
+					return;
+				}
+
+				if (triggerMode !== 'hover') {
 					return;
 				}
 
@@ -201,6 +213,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 		menu.addEventListener('mouseleave', function() {
 			if (isMobileLayout()) {
+				return;
+			}
+
+			if (triggerMode !== 'hover') {
 				return;
 			}
 
